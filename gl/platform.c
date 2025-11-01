@@ -3,8 +3,15 @@
 #define RGFW_OPENGL
 #include "../rgfw.h"
 
-int platform_run(int argc, char **argv)
+/*
+ * This function is the entrypoint for the whole
+ * game. Its role is to initialize OpenGL, create
+ * the renderer and start the game loop.
+ */
+int platform_run(i32 argc, u8 **argv)
 {
+	(void) argc;
+	(void) argv;
 
 	RGFW_glHints* hints = RGFW_getGlobalHints_OpenGL();
 	hints->major = 3;
@@ -24,7 +31,7 @@ int platform_run(int argc, char **argv)
 
 	RGFW_window_setExitKey(win, RGFW_escape);
 
-	const GLubyte *version = glGetString(GL_VERSION);
+	const u8 *version = glGetString(GL_VERSION);
 	printf("OpenGL Version: %s\n", version);
 	printf("GLAD Version: %d.%d\n", GLAD_VERSION_MAJOR(glad_version), GLAD_VERSION_MINOR(glad_version));
 

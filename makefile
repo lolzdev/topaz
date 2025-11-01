@@ -3,7 +3,7 @@ include config.mk
 SRC:=topaz.c
 
 ifeq (${BACKEND},gl)
-	SRC += opengl/gl.c opengl/platform.c
+	SRC += gl/gl.c gl/platform.c
 endif
 
 OBJ:=${SRC:.c=.o}
