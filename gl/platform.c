@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include "gl.h"
 #define RGFW_IMPLEMENTATION
 #define RGFW_OPENGL

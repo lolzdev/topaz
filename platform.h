@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 #ifndef PLATFORM_H
 #define PLATFORM_H
 

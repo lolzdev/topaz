@@ -1,6 +1,8 @@
+# SPDX-License-Identifier: BSD-3-Clause
+
 CC := cc
 CFLAGS := -Wall -Wextra -std=c99 -pedantic -ggdb -O2
-LIBS :=
+LIBS := -lm
 # if this is set to gl, it will use OpenGL, otherwise it will use Vulkan
 BACKEND := gl
 

@@ -1,6 +1,8 @@
+# SPDX-License-Identifier: BSD-3-Clause
+
 include config.mk
 
-SRC:=topaz.c
+SRC:=topaz.c linear.c flecs.c
 
 ifeq (${BACKEND},gl)
 	SRC += gl/gl.c gl/platform.c
