@@ -5,7 +5,8 @@ include config.mk
 SRC:=\
      topaz.c\
      linear.c\
-     core/arena.c
+     core/arena.c\
+     core/vector.c
 
 ifeq (${BACKEND},gl)
 	SRC += gl/gl.c\
