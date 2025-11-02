@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 CC := cc
-CFLAGS := -Wall -Wextra -std=c99 -pedantic -ggdb -O2
+CFLAGS := -Wall -Wextra -std=c99 -pedantic -ggdb -O2 -DDEBUG
 LIBS := -lm
 # can be gl or vk
-BACKEND := gl
+BACKEND := vk
 
 PLATFORM := $(shell uname)
 
@@ -22,7 +22,7 @@ endif
 
 ifeq (${PLATFORM},Darwin)
 	CFLAGS += -DPLATFORM_MACOS
-	LIBS += -framework Cocoa -framework CoreVideo -framework IOKit
+	LIBS += -framework Cocoa -framework CoreVideo -framework Metal -framework IOKit
 else ifeq (${PLATFORM},Linux)
 	CFLAGS += -DPLATFORM_LINUX
 endif

@@ -14,7 +14,8 @@ ifeq (${BACKEND},gl)
 endif
 ifeq (${BACKEND},vk)
 	SRC += vk/platform.c\
-	       vk/renderer.c
+	       vk/renderer.c\
+	       vk/instance.c
 endif
 
 OBJ:=${SRC:.c=.o}

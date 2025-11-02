@@ -2379,7 +2379,7 @@ RGFWDEF RGFW_bool RGFW_extensionSupportedPlatform_EGL(const char* extension, siz
  * @param count [OUTPUT] A pointer that will receive the number of required extensions (typically 2).
  * @return A pointer to a static array of required Vulkan instance extension names.
 */
-RGFWDEF const char** RGFW_getRequiredInstanceExtensions_Vulkan(size_t* count);
+const char** RGFW_getRequiredInstanceExtensions_Vulkan(size_t* count);
 
 /**!
  * @brief Creates a Vulkan surface for the specified window.
@@ -4613,7 +4613,7 @@ VkResult RGFW_window_createSurface_Vulkan(RGFW_window* win, VkInstance instance,
     return vkCreateWin32SurfaceKHR(instance, &win32, NULL, surface);
 #elif defined(RGFW_MACOS) && !defined(RGFW_MACOS_X11)
     void* contentView = ((void* (*)(id, SEL))objc_msgSend)((id)win->src.window, sel_getUid("contentView"));
-    VkMacOSSurfaceCreateSurfaceMVK macos = { VK_STRUCTURE_TYPE_MACOS_SURFACE_CREATE_INFO_MVK, 0, 0, 0, (void*)contentView };
+    VkMacOSSurfaceCreateInfoMVK macos = { VK_STRUCTURE_TYPE_MACOS_SURFACE_CREATE_INFO_MVK, 0, 0, (void*)contentView };
     return vkCreateMacOSSurfaceMVK(instance, &macos, NULL, surface);
 #endif
 }
@@ -4634,6 +4634,8 @@ RGFW_bool RGFW_getPresentationSupport_Vulkan(VkInstance instance, VkPhysicalDevi
     return wlout;
 #elif defined(RGFW_WINDOWS)
 #elif defined(RGFW_MACOS) && !defined(RGFW_MACOS_X11)
+    (void) physicalDevice;
+    (void) queueFamilyIndex;
     return RGFW_FALSE; /* TODO */
 #endif
 }
