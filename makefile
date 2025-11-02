@@ -2,13 +2,18 @@
 
 include config.mk
 
-SRC:=topaz.c linear.c
+SRC:=\
+     topaz.c\
+     linear.c\
+     core/arena.c
 
 ifeq (${BACKEND},gl)
-	SRC += gl/gl.c gl/platform.c
+	SRC += gl/gl.c\
+	       gl/platform.c
 endif
 ifeq (${BACKEND},vk)
-	SRC += vk/platform.c
+	SRC += vk/platform.c\
+	       vk/renderer.c
 endif
 
 OBJ:=${SRC:.c=.o}
