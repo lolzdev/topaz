@@ -3,7 +3,7 @@
 CC := cc
 CFLAGS := -Wall -Wextra -std=c99 -pedantic -ggdb -O2
 LIBS := -lm
-# if this is set to gl, it will use OpenGL, otherwise it will use Vulkan
+# can be gl or vk
 BACKEND := gl
 
 PLATFORM := $(shell uname)
@@ -11,14 +11,18 @@ PLATFORM := $(shell uname)
 ifeq (${BACKEND},gl)
 	CFLAGS += -DBACKEND_GL
 ifeq (${PLATFORM},Darwin)
-	LIBS += -framework Cocoa -framework CoreVideo -framework OpenGL -framework IOKit
+	LIBS += -framework OpenGL
 else
 	LIBS += -lGL
 endif
 else
-	CFLAGS := -DBACKEND_VK
+	LIBS += -lvulkan
+	CFLAGS += -DBACKEND_VK
 endif
 
 ifeq (${PLATFORM},Darwin)
 	CFLAGS += -DPLATFORM_MACOS
+	LIBS += -framework Cocoa -framework CoreVideo -framework IOKit
+else ifeq (${PLATFORM},Linux)
+	CFLAGS += -DPLATFORM_LINUX
 endif

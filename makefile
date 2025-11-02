@@ -2,10 +2,13 @@
 
 include config.mk
 
-SRC:=topaz.c linear.c flecs.c
+SRC:=topaz.c linear.c
 
 ifeq (${BACKEND},gl)
 	SRC += gl/gl.c gl/platform.c
+endif
+ifeq (${BACKEND},vk)
+	SRC += vk/platform.c
 endif
 
 OBJ:=${SRC:.c=.o}
