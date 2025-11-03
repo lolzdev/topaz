@@ -1,18 +1,22 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 include config.mk
+ifeq (${DEBUG_BUILD},1)
+	CFLAGS += -ggdb -fsanitize=address,undefined -DDEBUG
+endif
 
 SRC:=\
      topaz.c\
      linear.c\
      core/arena.c\
-     core/vector.c
+     core/vector.c\
 
-ifeq (${BACKEND},gl)
+ifeq (${GRAPHICS_BACKEND},gl)
 	SRC += gl/gl.c\
-	       gl/platform.c
+	       gl/platform.c\
+		   gl/renderer.c
 endif
-ifeq (${BACKEND},vk)
+ifeq (${GRAPHICS_BACKEND},vk)
 	SRC += vk/platform.c\
 	       vk/renderer.c\
 	       vk/instance.c\
