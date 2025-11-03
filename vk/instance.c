@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BSD-3-Clause
+// SPDX - License - Identifier:BSD - 3 - Clause
 #include "instance.h"
 #include "../core/log.h"
 #define RGFW_VULKAN
@@ -8,8 +8,9 @@
 const char *extensions[] = {
 #ifdef PLATFORM_MACOS
 	VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME,
-	VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME
+	VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME,
 #endif
+	NULL
 };
 
 #ifdef DEBUG
@@ -23,21 +24,18 @@ const char *layers[] = {NULL};
 #endif
 
 /*
- * Vulkan is modular by design. This means that
- * some features that might not be always needed
- * are not enabled by default. To enable those
- * features (like macOS platform compatibility
- * or windowing) extensions are needed. This
- * function checks which extensions are required
- * by RGFW and adds extensions required by the
- * game itself.
+ * Vulkan is modular by design. This means that some features that might not be
+ * always needed are not enabled by default. To enable those features (like
+ * macOS platform compatibility or windowing) extensions are needed. This
+ * function checks which extensions are required by RGFW and adds extensions
+ * required by the game itself.
  */
-const char **vk_instance_extensions(usize *count)
+const char **vk_instance_extensions(usize * count)
 {
 	usize rgfw_extension_count = 0;
 	const char **rgfw_extensions = RGFW_getRequiredInstanceExtensions_Vulkan(&rgfw_extension_count);
 
-	usize extension_count = sizeof(extensions)/sizeof(extensions[0]);
+	usize extension_count = sizeof(extensions) / sizeof(extensions[0]) - 1;
 	*count = rgfw_extension_count + extension_count;
 	const char **instance_extensions = malloc(*count * sizeof(char *));
 
@@ -83,7 +81,7 @@ void vk_instance_init(struct renderer_context *context)
 	};
 
 	VkResult result = vkCreateInstance(&instance_info, NULL, &context->instance);
-	switch(result) {
+	switch (result) {
 	case VK_ERROR_INCOMPATIBLE_DRIVER:
 		free(extension_names);
 		fatal("Incompatible driver.\n");
