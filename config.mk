@@ -4,7 +4,7 @@ CC := cc
 CFLAGS := -Wall -Wextra -std=c99 -pedantic 
 LIBS := -lm
 # Can be gl or vk
-BACKEND := vk
+GRAPHICS_BACKEND := vk
 
 PLATFORM := $(shell uname)
 
@@ -26,11 +26,10 @@ ifeq (${PLATFORM},Darwin)
 else ifeq (${PLATFORM},Linux)
 # Check for windowing platforms if it's linux
 	LINUX_WINDOW_PLATFORM := $(shell echo $$DISPLAY) 
-endif
-
-# If LINUX_WINDOW_PLATFORM is "", it is Wayland, otherwise it's Xorg
+	# If LINUX_WINDOW_PLATFORM is "", it is Wayland, otherwise it's Xorg
 ifeq ($(LINUX_WINDOW_PLATFORM),)
 	LIBS += -lwayland-client
 else	
 	LIBS += -lX11 -lXrandr
+endif
 endif
