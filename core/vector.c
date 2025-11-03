@@ -4,6 +4,7 @@
 
 struct vector *vector_init(usize size, usize element_size)
 {
+	if (size == 0) size = 1;
 	struct vector *vector = (struct vector *) malloc(sizeof(struct vector));
 	vector->length = 0;
 	vector->size = size;

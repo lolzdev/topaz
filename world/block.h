@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: BSD-3-Clause
 #ifdef BLOCK_H
 #define BLOCK_H
 

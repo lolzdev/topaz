@@ -36,6 +36,7 @@ int platform_run(i32 argc, u8 **argv)
 		while (RGFW_window_checkEvent(win, &event));
 	}
 
+	renderer_context_deinit(context);
 	RGFW_window_close(win);
 	return 0;
 }

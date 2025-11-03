@@ -2,6 +2,7 @@
 #include "arena.h"
 #include <stdlib.h>
 
+
 struct arena_allocator *arena_init(usize size)
 {
 	struct arena_allocator *allocator = (struct arena_allocator *) malloc(sizeof(struct arena_allocator));
@@ -20,8 +21,13 @@ void arena_deinit(struct arena_allocator *allocator)
 
 void *arena_alloc(struct arena_allocator *allocator, usize size)
 {
+	if (allocator->position + size >= allocator->size) {
+		allocator->size = allocator->position + size;
+		allocator->base = (usize) realloc((void *)allocator->base, allocator->size + allocator->size / 2);
+	}
 	void *ptr = (void *)(allocator->base + allocator->position);
 	allocator->position += size;
+	
 	return ptr;
 }
 

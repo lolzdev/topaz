@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 CC := cc
-CFLAGS := -Wall -Wextra -std=c99 -pedantic -ggdb -O2 -DDEBUG
+CFLAGS := -Wall -Wextra -std=c99 -pedantic -ggdb -fsanitize=address -DDEBUG
 LIBS := -lm
 # can be gl or vk
 BACKEND := vk

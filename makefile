@@ -15,13 +15,15 @@ endif
 ifeq (${BACKEND},vk)
 	SRC += vk/platform.c\
 	       vk/renderer.c\
-	       vk/instance.c
+	       vk/instance.c\
+	       vk/physical_device.c\
+	       vk/device.c
 endif
 
 OBJ:=${SRC:.c=.o}
 
 all: ${OBJ}
-	${CC} ${LIBS} ${OBJ} -o topaz
+	${CC} ${LIBS} ${CFLAGS} ${OBJ} -o topaz
 
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@

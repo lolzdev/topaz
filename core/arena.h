@@ -17,6 +17,7 @@ struct arena_allocator {
 	usize position;
 };
 
+extern struct arena_allocator *global_arena;
 
 /* Create a new arena allocator of size `size` */
 struct arena_allocator *arena_init(usize size);

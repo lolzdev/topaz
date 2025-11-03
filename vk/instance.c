@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: BSD-3-Clause
 #include "instance.h"
 #include "../core/log.h"
 #define RGFW_VULKAN
@@ -40,27 +41,19 @@ const char **vk_instance_extensions(usize *count)
 	*count = rgfw_extension_count + extension_count;
 	const char **instance_extensions = malloc(*count * sizeof(char *));
 
-	#ifdef DEBUG
 	log_info("Required Vulkan extensions: ");
-	#endif
 
 	for (usize i = 0; i < rgfw_extension_count; i++) {
-		#ifdef DEBUG
 		printf("%s ", rgfw_extensions[i]);
-		#endif
 		instance_extensions[i] = rgfw_extensions[i];
 	}
 
 	for (usize i = 0; i < extension_count; i++) {
-		#ifdef DEBUG
 		printf("%s ", extensions[i]);
-		#endif
 		instance_extensions[rgfw_extension_count + i] = extensions[i];
 	}
 
-	#ifdef DEBUG
 	printf("\n");
-	#endif
 
 	return instance_extensions;
 }
@@ -92,8 +85,10 @@ void vk_instance_init(struct renderer_context *context)
 	VkResult result = vkCreateInstance(&instance_info, NULL, &context->instance);
 	switch(result) {
 	case VK_ERROR_INCOMPATIBLE_DRIVER:
+		free(extension_names);
 		fatal("Incompatible driver.\n");
 	case VK_ERROR_LAYER_NOT_PRESENT:
+		free(extension_names);
 		fatal("Requested vulkan layers are not present.\n");
 	case VK_SUCCESS:
 		log_info("Vulkan instance created.\n");
@@ -103,4 +98,9 @@ void vk_instance_init(struct renderer_context *context)
 	}
 
 	free(extension_names);
+}
+
+void vk_instance_deinit(struct renderer_context *context)
+{
+	vkDestroyInstance(context->instance, NULL);
 }
