@@ -1,0 +1,14 @@
+-i8
+-ts8
+-ut
+-brf
+-lp
+-ce
+-npcs
+-ncs
+-l80
+-cd33
+-nip
+-npsl
+-di1
+-ldi1

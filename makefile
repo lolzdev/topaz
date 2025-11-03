@@ -12,9 +12,9 @@ SRC:=\
      core/vector.c\
 
 ifeq (${GRAPHICS_BACKEND},gl)
-	SRC += gl/gl.c\
-	       gl/platform.c\
-		   gl/renderer.c
+	SRC +=	gl/gl.c\
+		gl/platform.c\
+		gl/renderer.c
 endif
 ifeq (${GRAPHICS_BACKEND},vk)
 	SRC += vk/platform.c\
@@ -35,3 +35,11 @@ all: ${OBJ}
 .PHONY: clean
 clean:
 	@rm -rfv ${OBJ} topaz
+
+INDENTABLE := $(shell find . -name "*.c" -o -name "*.h")
+INDENTABLE := $(filter-out ./gl/gl.h,$(INDENTABLE))
+INDENTABLE := $(filter-out ./rgfw.h,$(INDENTABLE))
+indent: $(INDENTABLE:%=%.indent)
+
+%.indent: %
+	indent $<
