@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BSD-3-Clause
+/* SPDX-License-Identifier:BSD-3-Clause */
 #ifndef LINEAR_H
 #define LINEAR_H
 

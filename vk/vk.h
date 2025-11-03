@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BSD-3-Clause
+/* SPDX-License-Identifier:BSD-3-Clause */
 #ifndef VK_H
 #define VK_H
 

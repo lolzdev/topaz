@@ -12,3 +12,4 @@
 -npsl
 -di1
 -ldi1
+-nfc1

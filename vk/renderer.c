@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BSD-3-Clause
+/* SPDX-License-Identifier:BSD-3-Clause */
 #include "../rendering/renderer.h"
 #include "instance.h"
 #include "physical_device.h"
@@ -10,7 +10,7 @@
 
 struct renderer_context *renderer_context_init(void)
 {
-	struct renderer_context *context = (struct renderer_context *) arena_alloc(global_arena, (sizeof(struct renderer_context)));
+	struct renderer_context *context = (struct renderer_context *)arena_alloc(global_arena, (sizeof(struct renderer_context)));
 
 	vk_instance_init(context);
 	vk_physical_device_pick(context);
@@ -32,10 +32,10 @@ struct mesh *renderer_build_chunk_mesh(void)
 
 void renderer_draw_mesh(struct mesh mesh)
 {
-	(void) mesh;
+	(void)mesh;
 }
 
 void renderer_draw_chunk(struct mesh mesh)
 {
-	(void) mesh;
+	(void)mesh;
 }

@@ -1,11 +1,12 @@
-// SPDX-License-Identifier: BSD-3-Clause
+/* SPDX-License-Identifier:BSD-3-Clause */
 #include "vector.h"
 #include "log.h"
 
 struct vector *vector_init(usize size, usize element_size)
 {
-	if (size == 0) size = 1;
-	struct vector *vector = (struct vector *) malloc(sizeof(struct vector));
+	if (size == 0)
+		size = 1;
+	struct vector *vector = (struct vector *)malloc(sizeof(struct vector));
 	vector->length = 0;
 	vector->size = size;
 	vector->data = malloc(size * element_size);
@@ -14,12 +15,13 @@ struct vector *vector_init(usize size, usize element_size)
 
 void *vector_shrink(struct vector *vector, usize element_size)
 {
-	#ifdef DEBUG
-	if (vector->length == 0) log_error("Popping from an empty vector.\n");
-	#endif
+#ifdef DEBUG
+	if (vector->length == 0)
+		log_error("Popping from an empty vector.\n");
+#endif
 	vector->length -= 1;
-	if (vector->length <= vector->size/3) {
-		vector->size = vector->length + vector->length/2;
+	if (vector->length <= vector->size / 3) {
+		vector->size = vector->length + vector->length / 2;
 		vector->data = realloc(vector->data, vector->size * element_size + 1);
 	}
 	return vector->data;

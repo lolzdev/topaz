@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BSD-3-Clause
+/* SPDX-License-Identifier:BSD-3-Clause */
 #include "physical_device.h"
 #include "../core/log.h"
 #include <stdio.h>
@@ -34,7 +34,7 @@ struct vector *vk_physical_device_get_extensions(struct renderer_context *contex
 	VkExtensionProperties *properties = NULL;
 
 	vkEnumerateDeviceExtensionProperties(context->physical_device, NULL, &property_count, NULL);
-	
+
 	struct vector *extensions = vector_init(property_count, sizeof(char *));
 	properties = (VkExtensionProperties *) malloc(sizeof(VkExtensionProperties) * property_count);
 
@@ -50,7 +50,7 @@ struct vector *vk_physical_device_get_extensions(struct renderer_context *contex
 	}
 
 	free(properties);
-	
+
 	return extensions;
 }
 

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BSD-3-Clause
+/* SPDX-License-Identifier:BSD-3-Clause */
 
 #include "gl.h"
 #define RGFW_IMPLEMENTATION
@@ -6,21 +6,20 @@
 #include "../rgfw.h"
 
 /*
- * This function is the entrypoint for the whole
- * game. Its role is to initialize OpenGL, create
- * the renderer and start the game loop.
+ * This function is the entrypoint for the whole game. Its role is to
+ * initialize OpenGL, create the renderer and start the game loop.
  */
-int platform_run(i32 argc, u8 **argv)
+int platform_run(i32 argc, u8 * *argv)
 {
-	(void) argc;
-	(void) argv;
+	(void)argc;
+	(void)argv;
 
-	RGFW_glHints* hints = RGFW_getGlobalHints_OpenGL();
+	RGFW_glHints *hints = RGFW_getGlobalHints_OpenGL();
 	hints->major = 3;
 	hints->minor = 3;
 	RGFW_setGlobalHints_OpenGL(hints);
 
-	RGFW_window* win = RGFW_createWindow("Topaz", 0, 0, 800, 600, RGFW_windowCenter | RGFW_windowNoResize | RGFW_windowHide);
+	RGFW_window *win = RGFW_createWindow("Topaz", 0, 0, 800, 600, RGFW_windowCenter | RGFW_windowNoResize | RGFW_windowHide);
 	RGFW_window_createContext_OpenGL(win, hints);
 
 	int glad_version = gladLoadGL(RGFW_getProcAddress_OpenGL);

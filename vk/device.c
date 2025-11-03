@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BSD-3-Clause
+/* SPDX-License-Identifier:BSD-3-Clause */
 #include "device.h"
 #include "physical_device.h"
 #include "../core/vector.h"
@@ -13,10 +13,10 @@ void vk_device_init(struct renderer_context *context)
 	for (usize i = 0; i < physical_device_extensions->length; i++) {
 		if (strcmp(((char **)physical_device_extensions->data)[i], "VK_KHR_portability_subset") == 0) {
 			/*
-			 * The spec states that if VK_KHR_portability_subset
-			 * is present in the physical device extensions,
-			 * the device should also have that extension enabled.
-			*/
+			 * The spec states that if VK_KHR_portability_subset is
+			 * present in the physical device extensions, the
+			 * device should also have that extension enabled.
+			 */
 			vector_push(device_extensions, char *, "VK_KHR_portability_subset");
 		}
 

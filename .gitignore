@@ -2,3 +2,6 @@
 .clang-format
 compile-commands.json
 topaz
+**/*.BAK
+**/*.bak
+**/*~
