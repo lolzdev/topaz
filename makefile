@@ -43,3 +43,4 @@ indent: $(INDENTABLE:%=%.indent)
 
 %.indent: %
 	indent $<
+	@rm $(notdir $<.BAK)
