@@ -1,6 +1,6 @@
 **/*.o
 .clang-format
-compile-commands.json
+compile_commands.json
 topaz
 .cache
 **/*.BAK
