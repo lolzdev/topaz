@@ -36,12 +36,12 @@ void *vector_shrink(struct vector *vector, usize element_size);
  * elements to the new allocated memory.
  */
 #define vector_push(vec, T, value) do {\
-	if (vec->length + 1 >= vec->size) {\
-		vec->size += vec->size/2;\
-		vec->data = realloc(vec->data, vec->size * sizeof(T));\
+	if ((vec)->length + 1 >= (vec)->size) {\
+		(vec)->size += (vec)->size/2 > 0 ? (vec)->size / 2 : 1;\
+		(vec)->data = realloc((vec)->data, (vec)->size * sizeof(T));\
 	}\
-	((T *)vec->data)[vec->length] = value;\
-	vec->length += 1;\
+	((T *)(vec)->data)[(vec)->length] = value;\
+	(vec)->length += 1;\
 } while (0)
 
 /*
