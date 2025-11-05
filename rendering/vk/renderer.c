@@ -3,16 +3,19 @@
 #include "instance.h"
 #include "physical_device.h"
 #include "device.h"
+#include "surface.h"
 #include "vk.h"
 #include "../../core/arena.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-struct renderer_context *renderer_context_init(void)
+struct renderer_context *renderer_context_init(RGFW_window *window)
 {
 	struct renderer_context *context = (struct renderer_context *)arena_alloc(global_arena, (sizeof(struct renderer_context)));
+	context->window = window;
 
 	vk_instance_init(context);
+	vk_surface_init(context);
 	vk_physical_device_pick(context);
 	vk_physical_device_select_family_indices(context);
 	vk_device_init(context);
@@ -21,6 +24,7 @@ struct renderer_context *renderer_context_init(void)
 
 void renderer_context_deinit(struct renderer_context *context)
 {
+	vk_surface_deinit(context);
 	vk_device_deinit(context);
 	vk_instance_deinit(context);
 }

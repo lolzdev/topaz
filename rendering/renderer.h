@@ -3,6 +3,10 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 #include "../types.h"
+#ifdef BACKEND_VK
+#define RGFW_VULKAN
+#endif
+#include "../rgfw.h"
 
 /*
  * A mesh is a drawable object represented as an index (offset) in the global
@@ -20,7 +24,7 @@ struct mesh {
  */
 struct renderer_context;
 
-struct renderer_context *renderer_context_init(void);
+struct renderer_context *renderer_context_init(RGFW_window *window);
 void renderer_context_deinit(struct renderer_context *context);
 struct mesh *renderer_build_chunk_mesh(void);
 void renderer_draw_mesh(struct renderer_context *context, struct mesh mesh);

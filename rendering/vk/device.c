@@ -24,9 +24,17 @@ void vk_device_init(struct renderer_context *context)
 	}
 
 	f32 priority = 0.0;
-	VkDeviceQueueCreateInfo graphics_queue_create_info = {
+	VkDeviceQueueCreateInfo graphics_queue_create_info[2];
+	graphics_queue_create_info[0] = (VkDeviceQueueCreateInfo){
 		.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
 		.queueFamilyIndex = context->queue_indices.graphics,
+		.queueCount = 1,
+		.pQueuePriorities = &priority
+	};
+
+	graphics_queue_create_info[1] = (VkDeviceQueueCreateInfo){
+		.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
+		.queueFamilyIndex = context->queue_indices.present,
 		.queueCount = 1,
 		.pQueuePriorities = &priority
 	};
@@ -35,8 +43,8 @@ void vk_device_init(struct renderer_context *context)
 		.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
 		.pNext = NULL,
 		.flags = 0,
-		.queueCreateInfoCount = 1,
-		.pQueueCreateInfos = &graphics_queue_create_info,
+		.queueCreateInfoCount = 2,
+		.pQueueCreateInfos = graphics_queue_create_info,
 		.enabledLayerCount = 0,
 		.ppEnabledLayerNames = NULL,
 		.enabledExtensionCount = device_extensions->length,
@@ -50,7 +58,8 @@ void vk_device_init(struct renderer_context *context)
 		fatal("Can't create Vulkan device.\n");
 	}
 
-	vkGetDeviceQueue(context->device, graphics_queue_create_info.queueFamilyIndex, 0, &context->graphics_queue);
+	vkGetDeviceQueue(context->device, graphics_queue_create_info[0].queueFamilyIndex, 0, &context->graphics_queue);
+	vkGetDeviceQueue(context->device, graphics_queue_create_info[1].queueFamilyIndex, 0, &context->present_queue);
 
 	vector_deinit(physical_device_extensions);
 	vector_deinit(device_extensions);

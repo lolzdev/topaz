@@ -1554,7 +1554,7 @@ extern "C" {
 	 * @param win a pointer to the target window
 	 * @return A pointer to the macOS view object, or NULL if not on macOS
 	*/
-	RGFWDEF void *RGFW_window_getView_OSX(RGFW_window * win);
+	void *RGFW_window_getView_OSX(RGFW_window * win);
 
 	/**!
 	 * @brief retrieves the macOS window object
@@ -5071,6 +5071,14 @@ const char *extensions = ((const char *(*) (u32))RGFW_glGetString) (RGFW_GL_EXTE
 
 		 return vkCreateWin32SurfaceKHR(instance, &win32, NULL, surface);
 #elif defined(RGFW_MACOS) && !defined(RGFW_MACOS_X11)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-local-typedef"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-local-typedef"
+#include <vulkan/vulkan_macos.h>
+#include <vulkan/vulkan_metal.h>
+#pragma GCC diagnostic pop
+#pragma clang diagnostic pop
 void *contentView = ((void *(*) (id, SEL))objc_msgSend) ((id) win->src.window, sel_getUid("contentView"));
 		VkMacOSSurfaceCreateInfoMVK macos = {VK_STRUCTURE_TYPE_MACOS_SURFACE_CREATE_INFO_MVK, 0, 0, (void *)contentView};
 		 return vkCreateMacOSSurfaceMVK(instance, &macos, NULL, surface);

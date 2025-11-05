@@ -20,6 +20,5 @@ typedef size_t usize;
 typedef float f32;
 typedef double f64;
 
-typedef uint8_t bool;
 
 #endif

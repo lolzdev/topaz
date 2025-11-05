@@ -2,16 +2,16 @@
 
 #define RGFW_VULKAN
 #define RGFW_IMPLEMENTATION
-#include "../../rgfw.h"
 #include <vulkan/vulkan.h>
 #include "../../core/log.h"
+
+#include "../renderer.h"
 
 #ifdef PLATFORM_MACOS
 #include <vulkan/vulkan_macos.h>
 #include <vulkan/vulkan_metal.h>
+void macos_set_window_layer(RGFW_window *window);
 #endif
-
-#include "../renderer.h"
 
 /*
  * This function is the entrypoint for the whole game. Its role is to
@@ -27,8 +27,9 @@ int platform_run(i32 argc, u8 * *argv)
 	RGFW_window *win = RGFW_createWindow("topaz", 0, 0, 800, 600, RGFW_windowCenter | RGFW_windowNoResize | RGFW_windowHide);
 	RGFW_window_show(win);
 	RGFW_window_setExitKey(win, RGFW_escape);
+	macos_set_window_layer(win);
 
-	struct renderer_context *context = renderer_context_init();
+	struct renderer_context *context = renderer_context_init(win);
 
 	while (RGFW_window_shouldClose(win) == RGFW_FALSE) {
 		RGFW_event event;

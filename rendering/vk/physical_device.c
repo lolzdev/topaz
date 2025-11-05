@@ -54,6 +54,7 @@ struct vector *vk_physical_device_get_extensions(struct renderer_context *contex
 	return extensions;
 }
 
+
 void vk_physical_device_select_family_indices(struct renderer_context *context)
 {
 	u32 property_count = 0;
@@ -64,13 +65,34 @@ void vk_physical_device_select_family_indices(struct renderer_context *context)
 	properties = (VkQueueFamilyProperties *) malloc(sizeof(VkExtensionProperties) * property_count);
 
 	vkGetPhysicalDeviceQueueFamilyProperties(context->physical_device, &property_count, properties);
-
+	/* 
+	 * Use 0xaa as a known value to specify that these
+	 * indices have not been found yet.
+	 */
+	context->queue_indices.graphics = 0xaa;
+	context->queue_indices.present = 0xaa;
+	/*
+	 * This loop iterates over all the family properties
+	 * provided by the physical device and searches for
+	 * two unique queue family indices, one for presentation
+	 * and one for graphics.
+	 */
 	for (u32 i = 0; i < property_count; i++) {
+		if (context->queue_indices.graphics != 0xaa && context->queue_indices.present != 0xaa) break;
 		VkQueueFamilyProperties prop = properties[i];
 
-		if (prop.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+		if ((prop.queueFlags & VK_QUEUE_GRAPHICS_BIT) && context->queue_indices.graphics == 0xaa) {
 			context->queue_indices.graphics = i;
+			continue;
 		}
+
+		VkBool32 present_support = VK_FALSE;
+		if (vkGetPhysicalDeviceSurfaceSupportKHR(context->physical_device, i, context->surface, &present_support) != VK_SUCCESS) {
+			free(properties);
+			fatal("Can't check for surface support.\n");
+		}
+
+		if (present_support == VK_TRUE) context->queue_indices.present = i;
 	}
 
 	free(properties);

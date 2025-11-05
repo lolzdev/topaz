@@ -21,8 +21,14 @@ ifeq (${GRAPHICS_BACKEND},vk)
 	       rendering/vk/renderer.c\
 	       rendering/vk/instance.c\
 	       rendering/vk/physical_device.c\
-	       rendering/vk/device.c
+	       rendering/vk/device.c\
+	       rendering/vk/surface.c
+
+ifeq (${PLATFORM},Darwin)
+	SRC += rendering/vk/macos_platform.c
 endif
+endif
+
 
 OBJ:=${SRC:.c=.o}
 
