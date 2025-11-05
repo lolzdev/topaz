@@ -45,6 +45,8 @@ void vk_device_init(struct renderer_context *context)
 	};
 
 	if (vkCreateDevice(context->physical_device, &device_create_info, NULL, &context->device) != VK_SUCCESS) {
+		vector_deinit(physical_device_extensions);
+		vector_deinit(device_extensions);
 		fatal("Can't create Vulkan device.\n");
 	}
 
