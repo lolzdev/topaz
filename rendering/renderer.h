@@ -23,7 +23,8 @@ struct renderer_context;
 struct renderer_context *renderer_context_init(void);
 void renderer_context_deinit(struct renderer_context *context);
 struct mesh *renderer_build_chunk_mesh(void);
-void renderer_draw_mesh(struct mesh mesh);
-void renderer_draw_chunk(struct mesh mesh);
+void renderer_draw_mesh(struct renderer_context *context, struct mesh mesh);
+void renderer_draw_chunk(struct renderer_context *context, struct mesh mesh);
+void renderer_present(struct renderer_context *context);
 
 #endif
