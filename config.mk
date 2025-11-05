@@ -5,7 +5,7 @@ CFLAGS := -Wall -Wextra -std=c99 -pedantic
 LIBS := -lm
 # Can be gl or vk
 GRAPHICS_BACKEND := vk
-
+DEBUG_BUILD=1
 PLATFORM := $(shell uname)
 
 ifeq (${GRAPHICS_BACKEND},gl)
