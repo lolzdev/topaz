@@ -12,16 +12,16 @@ SRC:=\
      core/vector.c\
 
 ifeq (${GRAPHICS_BACKEND},gl)
-	SRC +=	gl/gl.c\
-		gl/platform.c\
-		gl/renderer.c
+	SRC +=	rendering/gl/gl.c\
+			rendering/gl/platform.c\
+			rendering/gl/renderer.c
 endif
 ifeq (${GRAPHICS_BACKEND},vk)
-	SRC += vk/platform.c\
-	       vk/renderer.c\
-	       vk/instance.c\
-	       vk/physical_device.c\
-	       vk/device.c
+	SRC += rendering/vk/platform.c\
+	       rendering/vk/renderer.c\
+	       rendering/vk/instance.c\
+	       rendering/vk/physical_device.c\
+	       rendering/vk/device.c
 endif
 
 OBJ:=${SRC:.c=.o}
