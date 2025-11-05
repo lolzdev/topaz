@@ -1,11 +1,12 @@
 /* SPDX-License-Identifier:BSD-3-Clause */
 #include "arena.h"
+#include "log.h"
 #include <stdlib.h>
-
 
 struct arena_allocator *arena_init(usize size)
 {
-	struct arena_allocator *allocator = (struct arena_allocator *)malloc(sizeof(struct arena_allocator));
+	struct arena_allocator *allocator =
+	    (struct arena_allocator *)malloc(sizeof(struct arena_allocator));
 	allocator->size = size;
 	allocator->base = (usize) malloc(size);
 	allocator->position = 0;
@@ -15,6 +16,12 @@ struct arena_allocator *arena_init(usize size)
 
 void arena_deinit(struct arena_allocator *allocator)
 {
+#ifdef DEBUG
+	if (!allocator) {
+		log_error("attempt to free NULL arena\n");
+		return;
+	}
+#endif
 	free((void *)allocator->base);
 	free((void *)allocator);
 }
@@ -23,7 +30,9 @@ void *arena_alloc(struct arena_allocator *allocator, usize size)
 {
 	if (allocator->position + size >= allocator->size) {
 		allocator->size = allocator->position + size;
-		allocator->base = (usize) realloc((void *)allocator->base, allocator->size + allocator->size / 2);
+		allocator->base =
+		    (usize) realloc((void *)allocator->base,
+				    allocator->size + allocator->size / 2);
 	}
 	void *ptr = (void *)(allocator->base + allocator->position);
 	allocator->position += size;

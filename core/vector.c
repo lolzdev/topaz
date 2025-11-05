@@ -22,13 +22,21 @@ void *vector_shrink(struct vector *vector, usize element_size)
 	vector->length -= 1;
 	if (vector->length <= vector->size / 3) {
 		vector->size = vector->length + vector->length / 2;
-		vector->data = realloc(vector->data, vector->size * element_size + 1);
+		vector->data =
+		    realloc(vector->data, vector->size * element_size + 1);
 	}
 	return vector->data;
 }
 
 void vector_deinit(struct vector *vector)
 {
+#ifdef DEBUG
+	if (!vector) {
+		log_error("attempt to free NULL vector");
+		return;
+	}
+#endif
+
 	free(vector->data);
 	free(vector);
 }
