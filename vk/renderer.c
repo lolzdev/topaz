@@ -30,12 +30,14 @@ struct mesh *renderer_build_chunk_mesh(void)
 	return NULL;
 }
 
-void renderer_draw_mesh(struct mesh mesh)
+void renderer_draw_mesh(struct renderer_context *context, struct mesh mesh)
 {
+	(void) context;
 	(void)mesh;
 }
 
-void renderer_draw_chunk(struct mesh mesh)
+void renderer_draw_chunk(struct renderer_context *context, struct mesh mesh)
 {
 	(void)mesh;
+	(void)context;
 }
