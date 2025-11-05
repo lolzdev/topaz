@@ -7,7 +7,7 @@ endif
 
 SRC:=\
      topaz.c\
-     linear.c\
+     core/linear.c\
      core/arena.c\
      core/vector.c\
 
