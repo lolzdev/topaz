@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier:BSD-3-Clause */
 #ifndef AUDIO_H
 #define AUDIO_H
 
