@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier:BSD-3-Clause */
 #ifndef MACOS_PLATFORM
 #define MACOS_PLATFORM
 
