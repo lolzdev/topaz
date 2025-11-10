@@ -27,7 +27,9 @@ int platform_run(i32 argc, u8 * *argv)
 	RGFW_window *win = RGFW_createWindow("topaz", 0, 0, 800, 600, RGFW_windowCenter | RGFW_windowNoResize | RGFW_windowHide);
 	RGFW_window_show(win);
 	RGFW_window_setExitKey(win, RGFW_escape);
+	#ifdef PLATFORM_MACOS
 	macos_set_window_layer(win);
+	#endif
 
 	struct renderer_context *context = renderer_context_init(win);
 

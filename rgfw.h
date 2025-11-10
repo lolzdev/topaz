@@ -5058,7 +5058,7 @@ const char *extensions = ((const char *(*) (u32))RGFW_glGetString) (RGFW_GL_EXTE
 		*surface = VK_NULL_HANDLE;
 
 #ifdef RGFW_X11
-
+	#include <vulkan/vulkan_xlib.h>
 		VkXlibSurfaceCreateInfoKHR x11 = {VK_STRUCTURE_TYPE_XLIB_SURFACE_CREATE_INFO_KHR, 0, 0, (Display *) _RGFW->display, (Window) win->src.window};
 		 return vkCreateXlibSurfaceKHR(instance, &x11, NULL, surface);
 #endif
@@ -5086,12 +5086,13 @@ void *contentView = ((void *(*) (id, SEL))objc_msgSend) ((id) win->src.window, s
 	}
 
 
+/*
 	RGFW_bool RGFW_getPresentationSupport_Vulkan(VkInstance instance, VkPhysicalDevice physicalDevice, u32 queueFamilyIndex) {
 		RGFW_ASSERT(instance);
 		if (_RGFW == NULL)
 			RGFW_init();
 #ifdef RGFW_X11
-
+		#include <vulkan/vulkan_xlib.h>
 		Visual *visual = DefaultVisual(_RGFW->display, DefaultScreen(_RGFW->display));
 		RGFW_bool out = vkGetPhysicalDeviceXlibPresentationSupportKHR(physicalDevice, queueFamilyIndex, _RGFW->display, XVisualIDFromVisual(visual));
 		 return out;
@@ -5104,10 +5105,11 @@ void *contentView = ((void *(*) (id, SEL))objc_msgSend) ((id) win->src.window, s
 #elif defined(RGFW_MACOS) && !defined(RGFW_MACOS_X11)
 		 (void)physicalDevice;
 		 (void)queueFamilyIndex;
-		 return RGFW_FALSE;	/* TODO */
+		 return RGFW_FALSE;
 #endif
 	}
-#endif				/* end of RGFW_vulkan */
+*/
+#endif				
 
 	/*
 	 * This is where OS specific stuff starts
