@@ -67,11 +67,15 @@ void vk_instance_init(struct renderer_context *context)
 
 	usize extension_count = 0;
 	const char **extension_names = vk_instance_extensions(&extension_count);
+	u32 flags = 0;
+#ifdef PLATFORM_MACOS
+	flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
+#endif
 
 	VkInstanceCreateInfo instance_info = {
 		.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
 		.pApplicationInfo = &application_info,
-		.flags = VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR,
+		.flags = flags,
 		.enabledLayerCount = LAYER_COUNT,
 		.ppEnabledLayerNames = layers,
 		.enabledExtensionCount = extension_count,

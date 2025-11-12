@@ -8,8 +8,8 @@ endif
 SRC:=\
      topaz.c\
      core/linear.c\
-     core/arena.c\
      core/vector.c\
+     core/arena.c
 
 ifeq (${GRAPHICS_BACKEND},gl)
 	SRC +=	rendering/gl/gl.c\
