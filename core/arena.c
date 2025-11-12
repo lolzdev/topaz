@@ -3,54 +3,39 @@
 #include "log.h"
 #include <stdlib.h>
 
-struct arena_allocator *arena_init(usize size)
+arena arena_init(usize size)
 {
-	struct arena_allocator *allocator =
-	    (struct arena_allocator *)malloc(sizeof(struct arena_allocator));
-	allocator->size = size;
-	allocator->base = (usize) malloc(size);
-	allocator->position = 0;
-
-	return allocator;
+	return (arena){
+		.capacity = size,
+		.position = 0,
+		.memory = malloc(size),
+	};
 }
 
-void arena_deinit(struct arena_allocator *allocator)
+void *arena_alloc(arena *a, usize size)
 {
-#ifdef DEBUG
-	if (!allocator) {
-		log_error("attempt to free NULL arena\n");
-		return;
-	}
-#endif
-	free((void *)allocator->base);
-	free((void *)allocator);
+	if (a->position + size > a->capacity) return NULL;
+	void *ret = (void *)((usize)a->memory + (usize)a->position);
+	a->position += size;
+	return ret;
 }
 
-void *arena_alloc(struct arena_allocator *allocator, usize size)
+snapshot arena_snapshot(arena a)
 {
-	if (allocator->position + size >= allocator->size) {
-		allocator->size = allocator->position + size;
-		allocator->base =
-		    (usize) realloc((void *)allocator->base,
-				    allocator->size + allocator->size / 2);
-	}
-	void *ptr = (void *)(allocator->base + allocator->position);
-	allocator->position += size;
-
-	return ptr;
+	return a.position;
 }
 
-void *arena_zalloc(struct arena_allocator *allocator, usize size)
+void arena_reset_to_snapshot(arena *a, snapshot s)
 {
-	void *ptr = arena_alloc(allocator, size);
-	for (usize i = 0; i < size; i++) {
-		((u8 *) ptr)[i] = 0x0;
-	}
-
-	return ptr;
+	a->position = s;
 }
 
-void arena_bump(struct arena_allocator *allocator)
+void arena_reset(arena *a)
 {
-	allocator->position = 0;
+	arena_reset_to_snapshot(a, 0);
+}
+
+void arena_deinit(arena a)
+{
+	free(a.memory);
 }

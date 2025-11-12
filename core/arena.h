@@ -1,39 +1,31 @@
 /* SPDX-License-Identifier:BSD-3-Clause */
 #ifndef ARENA_H
 #define ARENA_H
-
 #include "../types.h"
 
-/*
- * An arena is a fast allocator that just keeps everything in a contiguous
- * chunk of memory and moves a "pointer" when allocating new memory. The
- * allocated memory is then free'd all at once.
- */
-struct arena_allocator {
-	usize size;
-	usize base;
+typedef struct {
+	usize capacity;
 	usize position;
-};
+	void* memory;
+} arena;
 
-extern struct arena_allocator *global_arena;
-
-/* Create a new arena allocator of size `size` */
-struct arena_allocator *arena_init(usize size);
-/* Destroy the allocator and */
-void arena_deinit(struct arena_allocator *allocator);
+typedef usize snapshot;
 
 /*
- * Allocate a chunk of memory of size `size` on the arena.
+ * NOTE(ernesto): faulty initialization is signalided by the arena.memory
+ * being null. It is the responsability of the caller to check for fulty
+ * initialization.
  */
-void *arena_alloc(struct arena_allocator *allocator, usize size);
+arena arena_init(usize size);
 /*
- * Same as `arena_alloc()` but also set all the allocated memory to zero.
+ * Returns null on unsuccessfull allocation.
+ * In this implemention an allocation is only unsuccessfull if the arena
+ * does not have enough memory to allocate the requested space
  */
-void *arena_zalloc(struct arena_allocator *allocator, usize size);
-/*
- * Free all the allocated memory at once. This just sets the allocator cursor
- * to its starting position.
- */
-void arena_bump(struct arena_allocator *allocator);
-
+void *arena_alloc(arena *a, usize size);
+snapshot arena_snapshot(arena a);
+void arena_reset_to_snapshot(arena *a, snapshot s);
+void arena_reset(arena *a);
+/* This call should never fail, also, do we even care if it does? */
+void arena_deinit(arena a);
 #endif
