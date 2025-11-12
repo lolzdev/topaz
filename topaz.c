@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "platform.h"
 #include "core/arena.h"
-#include "types.h"
+#include "core/types.h"
 
 struct arena_allocator *global_arena = NULL;
 

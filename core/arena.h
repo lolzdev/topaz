@@ -2,7 +2,7 @@
 #ifndef ARENA_H
 #define ARENA_H
 
-#include "../types.h"
+#include "../core/types.h"
 
 /*
  * An arena is a fast allocator that just keeps everything in a contiguous

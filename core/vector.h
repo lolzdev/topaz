@@ -3,7 +3,7 @@
 #define VECTOR_H
 
 #include <stdlib.h>
-#include "../types.h"
+#include "../core/types.h"
 
 /*
  * The vector is a dynamically growing array that can be operated as a regular
