@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "platform.h"
 #include "core/arena.h"
-#include "types.h"
+#include "core/types.h"
 
 i32 main(i32 argc, char **argv)
 {

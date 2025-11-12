@@ -3,7 +3,7 @@
 #define VK_H
 
 #include <vulkan/vulkan.h>
-#include "../../types.h"
+#include "../../core/types.h"
 #include "../../rgfw.h"
 
 struct queue_family_indices {

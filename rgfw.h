@@ -353,7 +353,7 @@ extern "C" {
 
 #define RGFW_HEADER
 
-#include "types.h"
+#include "core/types.h"
 
 	typedef ptrdiff_t RGFW_ssize_t;
 

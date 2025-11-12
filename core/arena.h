@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier:BSD-3-Clause */
 #ifndef ARENA_H
 #define ARENA_H
-#include "../types.h"
+#include "../core/types.h"
 
 typedef struct {
 	usize capacity;
